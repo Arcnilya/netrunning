@@ -8,7 +8,7 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 ```
 python3 net_architecture_generator.py
 Interface Level: 4
-['Wisp', 'File DV6', 'Asp', 'Sabertooth', 'Password DV8', Control Node DV8', 'File DV8', 'Password DV8', 'Killer', 'Asp', 'Hellhound']
+['Wisp', 'File DV6', 'Asp', 'Sabertooth', 'Password DV8', 'Control Node DV8', 'File DV8', 'Password DV8', 'Killer', 'Asp', 'Hellhound']
 ```
 
 ## net\_architecture\_runner (Coming Soon)
