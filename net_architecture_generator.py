@@ -6,17 +6,15 @@ body_tables = ["cpr_net_body_table_basic","cpr_net_body_table_standard", "cpr_ne
 lobby_table_fname = "cpr_net_lobby_table"
 
 def read_table_file(fname):
-    fp = open(os.path.join("tables", fname), "r")
-    table = fp.read().strip().split(', ')
-    fp.close()
-    return table
+    with open(os.path.join("tables", fname), "r") as fp:
+        return fp.read().strip().split(', ')
 
 def get_body_table(lvl):
     difficulty = 3 if lvl > 8 else int(lvl/2)-1
     difficulty = 0 if difficulty < 0 else difficulty
     return read_table_file(body_tables[difficulty])
 
-def roll_dice(x, y, z=0): # Roll 3d6 for the total number of floors
+def roll_dice(x, y, z=0): # Roll xdy+z
     result = 0
     for _ in range(x):
         result += random.randint(1, y)
@@ -24,11 +22,8 @@ def roll_dice(x, y, z=0): # Roll 3d6 for the total number of floors
 
 def roll_branch_num():
     branches = 0
-    while True:
-        if random.randint(1, 10) >= 7:
-            branches += 1
-        else:
-            break
+    while random.randint(1, 10) >= 7:
+        branches += 1
     return branches
 
 
