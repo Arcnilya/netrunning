@@ -4,6 +4,7 @@ Netrunning scripts for Cyberpunk Red
 ## net\_architecture\_generator (Work in Progress)
 Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on the Interface level of a Netrunner.
 
+### Usage (WIP)
 ```
 python3 net\_architecture\_generator.py
 Interface Level: 2
