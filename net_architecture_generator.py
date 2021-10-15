@@ -29,22 +29,25 @@ def roll_branch_num():
     return branches
 
 def print_architecture(result):
+    content = 0
+    branch = 1
+    depth = 2
     print("NET Architecture:")
     for i,room in enumerate(result):
-        print(room[0], end=' ')
-        if room[1]:
-            [print('-', branch[0], end=' ') for branch in room[1]]
+        print(room[content], f"({room[depth]})", end=' ')
+        if room[branch]:
+            [print('-', branch[content], f"({branch[depth]})", end=' ') for branch in room[branch]]
         print("\n|") if i+1 < len(result) else print("")
 
-
-def create_branch_path(body, num_floors, num_branches, roll_hist):
+def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
     branch = []
     while True:
+        curr_depth += 1
         roll = roll_dice(3, 6)
         while roll in roll_hist:
             roll = roll_dice(3, 6)
         roll_hist.append(roll)
-        branch.append([body[roll-3], []]) # Branches cannot have new branches
+        branch.append([body[roll-3], [], curr_depth]) # Branches cannot have new branches
         num_floors -= 1
 
         # 50% chance of additional room in branch if budget allows
@@ -54,7 +57,6 @@ def create_branch_path(body, num_floors, num_branches, roll_hist):
             break
     return branch, roll_hist
 
-
 def create_main_path(lobby, body, num_f=None, num_b=None):
     roll_hist = []
     architecture = []
@@ -62,11 +64,13 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
     num_branches = roll_branch_num() if num_b == None else num_b
     if debug: print(f"floors {num_floors}, branches {num_branches}")
     floor = 0
+    curr_depth = 0
+    max_depth = 0
     while floor < num_floors:
         if debug: print(f"current floor: {floor}")
-        if floor < 2:
-            architecture.append([lobby.pop(), []])
-        else: # Roll body table
+        if floor < 2:   # Roll lobby table
+            architecture.append([lobby.pop(), [], curr_depth])
+        else:           # Roll body table
             roll = roll_dice(3, 6)
             while roll in roll_hist:
                 roll = roll_dice(3, 6)
@@ -80,12 +84,16 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
             if num_branches > 0 and branch_roll <= floor/(num_floors-(num_branches * 2)):
                 if debug: print("Creating branch...")
                 num_branches -= 1
-                branch, new_roll_hist = create_branch_path(body, num_floors-floor-1, num_branches, roll_hist)
+                branch, new_roll_hist = create_branch_path(body, num_floors-floor-1, num_branches, roll_hist, curr_depth)
                 if debug: print(branch)
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
-            architecture.append([body_table[roll-3], branch])
+                max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
+            architecture.append([body_table[roll-3], branch, curr_depth])
+        max_depth = curr_depth if curr_depth > max_depth else max_depth
+        curr_depth += 1
         floor += 1
+    print("Max depth:", max_depth)
     return architecture
 
 
