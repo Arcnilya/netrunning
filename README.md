@@ -28,7 +28,7 @@ Wisp (7)
 ```
 
 ### Todo
-1. Change structure to a list of dictionaries instead of a list of lists
+1. ~~Change structure to a list of dictionaries instead of a list of lists~~
 2. Save NET Architecture to JSON
 3. Add a log to the NET Architecture with UIDs
 4. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)

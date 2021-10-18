@@ -29,14 +29,11 @@ def roll_branch_num():
     return branches
 
 def print_architecture(result):
-    content = 0
-    branch = 1
-    depth = 2
     print("NET Architecture:")
     for i,room in enumerate(result):
-        print(room[content], f"({room[depth]})", end=' ')
-        if room[branch]:
-            [print('-', branch[content], f"({branch[depth]})", end=' ') for branch in room[branch]]
+        print(room['content'], f"({room['depth']})", end=' ')
+        if room['branch']:
+            [print('-', branch['content'], f"({branch['depth']})", end=' ') for branch in room['branch']]
         print("\n|") if i+1 < len(result) else print("")
 
 def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
@@ -47,7 +44,8 @@ def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
         while roll in roll_hist:
             roll = roll_dice(3, 6)
         roll_hist.append(roll)
-        branch.append([body[roll-3], [], curr_depth]) # Branches cannot have new branches
+        room = {"content":body[roll-3], "branch":[], "depth":curr_depth} # Branches cannot have new branches
+        branch.append(room) 
         num_floors -= 1
 
         # 50% chance of additional room in branch if budget allows
@@ -69,7 +67,8 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
     while floor < num_floors:
         if debug: print(f"current floor: {floor}")
         if floor < 2:   # Roll lobby table
-            architecture.append([lobby.pop(), [], curr_depth])
+            room = {"content":lobby.pop(), "branch":[], "depth":curr_depth}
+            architecture.append(room)
         else:           # Roll body table
             roll = roll_dice(3, 6)
             while roll in roll_hist:
@@ -89,7 +88,8 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
                 max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
-            architecture.append([body_table[roll-3], branch, curr_depth])
+            room = {"content":body_table[roll-3], "branch":branch, "depth":curr_depth}
+            architecture.append(room)
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1
         floor += 1
