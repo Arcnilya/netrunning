@@ -7,35 +7,33 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 ### Usage (WIP)
 ```
 python3 net_architecture_generator.py
-Interface Level: 2
-Max depth: 7
+Architecture Name: 
+Interface Level: 
+Max depth: 8
 NET Architecture:
-Skunk (0) 
+Wisp (0) 
 |
-Password DV8 (1) 
+Killer (1) 
 |
-Control Node DV6 (2) 
+Wisp (2) 
 |
-Skunk (3) 
+Password DV6 (3) 
 |
-Scorpion (4) - Password DV6 (5) - File DV6 (6) 
+File DV6 (4) - Control Node DV6 (5) 
 |
-Raven (5) 
-|
-Password DV6 (6) 
-|
-Wisp (7) 
+Skunk (5) - Password DV6 (6) - Asp (7) - Liche (8) 
 ```
 
 ### Todo
 1. ~~Change structure to a list of dictionaries instead of a list of lists~~
-2. Save NET Architecture to JSON
-3. Add a log to the NET Architecture with UIDs
-4. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
-5. Add owner to Control Nodes (UIDs)
-6. Add content to Files (flavor text)
-7. Add Virus instructions to the NET Architecture
-8. Add "logged-in Netrunners" (UIDs) and their HP
+2. ~~Save NET Architecture to JSON~~
+3. Add max\_depth to the NET Architecture
+4. Add a log to the NET Architecture with UIDs
+5. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
+6. Add owner to Control Nodes (UIDs)
+7. Add content to Files (flavor text)
+8. Add Virus instructions to the NET Architecture
+9. Add "logged-in Netrunners" (UIDs) and their HP
 
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).

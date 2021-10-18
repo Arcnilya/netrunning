@@ -1,0 +1,54 @@
+[
+    {
+        "content": "Wisp",
+        "depth": 0,
+        "branch": []
+    },
+    {
+        "content": "Killer",
+        "depth": 1,
+        "branch": []
+    },
+    {
+        "content": "Wisp",
+        "depth": 2,
+        "branch": []
+    },
+    {
+        "content": "Password DV6",
+        "depth": 3,
+        "branch": []
+    },
+    {
+        "content": "File DV6",
+        "depth": 4,
+        "branch": [
+            {
+                "content": "Control Node DV6",
+                "depth": 5,
+                "branch": []
+            }
+        ]
+    },
+    {
+        "content": "Skunk",
+        "depth": 5,
+        "branch": [
+            {
+                "content": "Password DV6",
+                "depth": 6,
+                "branch": []
+            },
+            {
+                "content": "Asp",
+                "depth": 7,
+                "branch": []
+            },
+            {
+                "content": "Liche",
+                "depth": 8,
+                "branch": []
+            }
+        ]
+    }
+]

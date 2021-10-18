@@ -2,6 +2,8 @@
 import random
 import os
 import sys
+import json
+import time
 
 debug = False
 body_tables = ["cpr_net_body_table_basic","cpr_net_body_table_standard", "cpr_net_body_table_uncommon", "cpr_net_body_table_advanced"]
@@ -36,6 +38,10 @@ def print_architecture(result):
             [print('-', branch['content'], f"({branch['depth']})", end=' ') for branch in room['branch']]
         print("\n|") if i+1 < len(result) else print("")
 
+def save_as_json(name, result):
+    with open(name+'.json', 'w') as fp:
+        json.dump(result, fp, indent=4)
+
 def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
     branch = []
     while True:
@@ -44,7 +50,7 @@ def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
         while roll in roll_hist:
             roll = roll_dice(3, 6)
         roll_hist.append(roll)
-        room = {"content":body[roll-3], "branch":[], "depth":curr_depth} # Branches cannot have new branches
+        room = {"content":body[roll-3], "depth":curr_depth, "branch":[]} # Branches cannot have new branches
         branch.append(room) 
         num_floors -= 1
 
@@ -67,7 +73,7 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
     while floor < num_floors:
         if debug: print(f"current floor: {floor}")
         if floor < 2:   # Roll lobby table
-            room = {"content":lobby.pop(), "branch":[], "depth":curr_depth}
+            room = {"content":lobby.pop(), "depth":curr_depth, "branch":[]}
             architecture.append(room)
         else:           # Roll body table
             roll = roll_dice(3, 6)
@@ -88,7 +94,7 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
                 max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
-            room = {"content":body_table[roll-3], "branch":branch, "depth":curr_depth}
+            room = {"content":body_table[roll-3], "depth":curr_depth, "branch":branch}
             architecture.append(room)
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1
@@ -97,6 +103,8 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
     return architecture
 
 
+name = input("Architecture Name: ")
+name = "NET-"+time.strftime("%Y%m%d-%H%M%S") if name == "" else name
 level = input("Interface Level: ")
 level = 2 if level == "" else int(level)
 lobby_table = read_table_file(lobby_table_fname)
@@ -109,6 +117,7 @@ else:
     result = create_main_path(lobby_table, body_table)
 
 print_architecture(result)
+save_as_json(name, result)
 
 
 
