@@ -7,21 +7,24 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 ### Usage (WIP)
 ```
 python3 net_architecture_generator.py
-Architecture Name: 
-Interface Level: 
-Max depth: 8
-NET Architecture:
+Architecture Name (optional): 
+Interface Level [2]: 
+=====================================
+NET Architecture: NET-20211019-142110
+Level: 2 Max Depth: 6
 Wisp (0) 
 |
-Killer (1) 
+Skunk (1) 
 |
-Wisp (2) 
+Raven x2 (2) 
 |
-Password DV6 (3) 
+Password DV6 (3) - Control Node DV6 (4) 
 |
-File DV6 (4) - Control Node DV6 (5) 
+Asp (4) 
 |
-Skunk (5) - Password DV6 (6) - Asp (7) - Liche (8) 
+Killer + Skunk (5) 
+|
+File DV6 (6) 
 ```
 
 ### Todo

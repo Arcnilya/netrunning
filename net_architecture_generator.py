@@ -6,17 +6,14 @@ import json
 import time
 
 debug = False
-body_tables = ["cpr_net_body_table_basic","cpr_net_body_table_standard", "cpr_net_body_table_uncommon", "cpr_net_body_table_advanced"]
+body_matrix_fname = "cpr_net_body_matrix"
 lobby_table_fname = "cpr_net_lobby_table"
 
-def read_table_file(fname):
+def get_table(fname, lvl=0):
+    difficulty = 3 if lvl > 8 else int(lvl/2)-1 # Converting from Interface level to Difficulty
+    difficulty = 0 if difficulty < 0 else difficulty # Safe input for negative values
     with open(os.path.join("tables", fname), "r") as fp:
-        return fp.read().strip().split(', ')
-
-def get_body_table(lvl):
-    difficulty = 3 if lvl > 8 else int(lvl/2)-1
-    difficulty = 0 if difficulty < 0 else difficulty
-    return read_table_file(body_tables[difficulty])
+        return fp.readlines()[difficulty].strip().split(', ')
 
 def roll_dice(x, y, z=0): # Roll xdy+z
     result = 0
@@ -24,23 +21,25 @@ def roll_dice(x, y, z=0): # Roll xdy+z
         result += random.randint(1, y)
     return result + z
 
-def roll_branch_num():
+def roll_branch_num(): # Roll for the number of branches in the architecture
     branches = 0
     while random.randint(1, 10) >= 7:
         branches += 1
     return branches
 
-def print_architecture(result):
-    print(f"NET Architecture (max depth {result['max_depth']}):")
+def print_architecture(result): # Nice output in the console
+    print("="*37)
+    print(f"NET Architecture: {result['name']}")
+    print(f"Level: {result['level']} Max Depth: {result['max_depth']}")
     for i,room in enumerate(result['rooms']):
         print(room['content'], f"({room['depth']})", end=' ')
         if room['branch']:
             [print('-', branch['content'], f"({branch['depth']})", end=' ') for branch in room['branch']]
         print("\n|") if i+1 < len(result['rooms']) else print("")
 
-def save_as_json(name, result):
+def save_as_json(name, data): # Save in a neat json file
     with open(name+'.json', 'w') as fp:
-        json.dump(result, fp, indent=4)
+        json.dump(data, fp, indent=4)
 
 def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
     branch = []
@@ -61,8 +60,7 @@ def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
             break
     return branch, roll_hist
 
-def create_main_path(lobby, body, num_f=None, num_b=None):
-    net_architecture = {}
+def create_main_path(net, lobby, body, num_f=None, num_b=None):
     roll_hist = []
     rooms = []
     num_floors = roll_dice(3, 6) if num_f == None else num_f
@@ -100,23 +98,28 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1
         floor += 1
-    net_architecture['max_depth'] = max_depth
-    net_architecture['rooms'] = rooms
-    return net_architecture
+    net['max_depth'] = max_depth
+    net['rooms'] = rooms
+    return net
 
 
-name = input("Architecture Name: ")
+name = input("Architecture Name (optional): ")
 name = "NET-"+time.strftime("%Y%m%d-%H%M%S") if name == "" else name
-level = input("Interface Level: ")
+level = input("Interface Level [2]: ")
 level = 2 if level == "" else int(level)
-lobby_table = read_table_file(lobby_table_fname)
+lobby_table = get_table(lobby_table_fname)
 random.shuffle(lobby_table)
-body_table = get_body_table(level)
+body_table = get_table(body_matrix_fname, level)
+
+net = {}
+net['name'] = name
+net['level'] = level
 
 if len(sys.argv) == 3:
-    net = create_main_path(lobby_table, body_table, int(sys.argv[1]), int(sys.argv[2]))
+    net = create_main_path(net, lobby_table, body_table, int(sys.argv[1]), int(sys.argv[2]))
 else:
-    net = create_main_path(lobby_table, body_table)
+    net = create_main_path(net, lobby_table, body_table)
+
 
 print_architecture(net)
 save_as_json(name, net)
