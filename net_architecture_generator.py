@@ -40,6 +40,8 @@ def print_architecture(result): # Nice output in the console
 def save_as_json(name, data): # Save in a neat json file
     with open(name+'.json', 'w') as fp:
         json.dump(data, fp, indent=4)
+    print("="*37)
+    print(f"Saved NET Architecture as: {name}.json")
 
 def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
     branch = []
