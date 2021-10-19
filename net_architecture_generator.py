@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 import random
 import os
-import sys
 import json
 import time
+import argparse
 
-debug = False
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", "--rooms", type=int, default=None, help="number of rooms")
+parser.add_argument("-b", "--branches", type=int, default=None, help="number of branches")
+parser.add_argument("-t", "--test", action="store_true", help="skips saving as json")
+parser.add_argument("-d", "--debug", action="store_true", help="run as verbose with debug info")
+args = parser.parse_args()
+
+
+debug = True if args.debug else False
 body_matrix_fname = "cpr_net_body_matrix"
 lobby_table_fname = "cpr_net_lobby_table"
 
@@ -117,12 +125,9 @@ net = {}
 net['name'] = name
 net['level'] = level
 
-if len(sys.argv) == 3:
-    net = create_main_path(net, lobby_table, body_table, int(sys.argv[1]), int(sys.argv[2]))
-else:
-    net = create_main_path(net, lobby_table, body_table)
-
+net = create_main_path(net, lobby_table, body_table, args.rooms, args.branches)
 
 print_architecture(net)
-save_as_json(name, net)
+if not args.test:
+    save_as_json(name, net)
 

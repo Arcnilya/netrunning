@@ -27,6 +27,8 @@ Asp (4)
 Killer + Skunk (5) 
 |
 File DV6 (6) 
+=====================================
+Saved NET Architecture as: NET-20211019-142110.json
 ```
 
 ### Todo
