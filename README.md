@@ -3,7 +3,8 @@ Netrunning scripts for Cyberpunk Red
 
 ## net\_architecture\_generator (Work in Progress)
 Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on the Interface level of a Netrunner.
-[NET Arcnitecture explained](documentation.md)
+
+[NET Arcnitecture structure explained](documentation.md)
 
 ### Usage (WIP)
 ```
