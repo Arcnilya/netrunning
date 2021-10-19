@@ -27,7 +27,8 @@ Skunk (5) - Password DV6 (6) - Asp (7) - Liche (8)
 ### Todo
 1. ~~Change structure to a list of dictionaries instead of a list of lists~~
 2. ~~Save NET Architecture to JSON~~
-3. Add max\_depth to the NET Architecture
+3. ~~Add max\_depth to the NET Architecture~~
+4. Merge roll-tables to one single file
 4. Add a log to the NET Architecture with UIDs
 5. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
 6. Add owner to Control Nodes (UIDs)

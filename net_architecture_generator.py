@@ -31,12 +31,12 @@ def roll_branch_num():
     return branches
 
 def print_architecture(result):
-    print("NET Architecture:")
-    for i,room in enumerate(result):
+    print(f"NET Architecture (max depth {result['max_depth']}):")
+    for i,room in enumerate(result['rooms']):
         print(room['content'], f"({room['depth']})", end=' ')
         if room['branch']:
             [print('-', branch['content'], f"({branch['depth']})", end=' ') for branch in room['branch']]
-        print("\n|") if i+1 < len(result) else print("")
+        print("\n|") if i+1 < len(result['rooms']) else print("")
 
 def save_as_json(name, result):
     with open(name+'.json', 'w') as fp:
@@ -62,8 +62,9 @@ def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
     return branch, roll_hist
 
 def create_main_path(lobby, body, num_f=None, num_b=None):
+    net_architecture = {}
     roll_hist = []
-    architecture = []
+    rooms = []
     num_floors = roll_dice(3, 6) if num_f == None else num_f
     num_branches = roll_branch_num() if num_b == None else num_b
     if debug: print(f"floors {num_floors}, branches {num_branches}")
@@ -74,7 +75,7 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
         if debug: print(f"current floor: {floor}")
         if floor < 2:   # Roll lobby table
             room = {"content":lobby.pop(), "depth":curr_depth, "branch":[]}
-            architecture.append(room)
+            rooms.append(room)
         else:           # Roll body table
             roll = roll_dice(3, 6)
             while roll in roll_hist:
@@ -95,12 +96,13 @@ def create_main_path(lobby, body, num_f=None, num_b=None):
                 floor += len(branch) # Update budget
                 max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
             room = {"content":body_table[roll-3], "depth":curr_depth, "branch":branch}
-            architecture.append(room)
+            rooms.append(room)
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1
         floor += 1
-    print("Max depth:", max_depth)
-    return architecture
+    net_architecture['max_depth'] = max_depth
+    net_architecture['rooms'] = rooms
+    return net_architecture
 
 
 name = input("Architecture Name: ")
@@ -112,12 +114,10 @@ random.shuffle(lobby_table)
 body_table = get_body_table(level)
 
 if len(sys.argv) == 3:
-    result = create_main_path(lobby_table, body_table, int(sys.argv[1]), int(sys.argv[2]))
+    net = create_main_path(lobby_table, body_table, int(sys.argv[1]), int(sys.argv[2]))
 else:
-    result = create_main_path(lobby_table, body_table)
+    net = create_main_path(lobby_table, body_table)
 
-print_architecture(result)
-save_as_json(name, result)
-
-
+print_architecture(net)
+save_as_json(name, net)
 
