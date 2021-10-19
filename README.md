@@ -31,13 +31,13 @@ File DV6 (6)
 1. ~~Change structure to a list of dictionaries instead of a list of lists~~
 2. ~~Save NET Architecture to JSON~~
 3. ~~Add max\_depth to the NET Architecture~~
-4. Merge roll-tables to one single file
-4. Add a log to the NET Architecture with UIDs
-5. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
-6. Add owner to Control Nodes (UIDs)
-7. Add content to Files (flavor text)
-8. Add Virus instructions to the NET Architecture
-9. Add "logged-in Netrunners" (UIDs) and their HP
+4. ~~Merge roll-tables to one single file~~
+5. Add a log to the NET Architecture with UIDs
+6. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
+7. Add owner to Control Nodes (UIDs)
+8. Add content to Files (flavor text)
+9. Add Virus instructions to the NET Architecture
+10. Add "logged-in Netrunners" (UIDs) and their HP
 
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).
