@@ -20,8 +20,7 @@ body_matrix_fname = "cpr_net_body_matrix"
 lobby_table_fname = "cpr_net_lobby_table"
 
 def get_table(fname, lvl=0):
-    difficulty = 3 if lvl > 8 else int(lvl/2)-1 # Converting from Interface level to Difficulty
-    difficulty = 0 if difficulty < 0 else difficulty # Safe input for negative values
+    difficulty = int(lvl/2)-1 # Converting from Interface level to Difficulty
     with open(os.path.join("tables", fname), "r") as fp:
         return fp.readlines()[difficulty].strip().split(', ')
 
@@ -115,9 +114,7 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
     return net
 
 
-#name = input("Architecture Name (optional): ")
 name = "NET-"+time.strftime("%Y%m%d-%H%M%S") if args.name == "" else args.name
-#level = input("Interface Level [2]: ")
 # https://gist.github.com/baybatu/269296fe1d530f0defff7b6454222bc0
 level = max(min(args.level, 8), 0) # Default 2
 lobby_table = get_table(lobby_table_fname)
@@ -127,6 +124,8 @@ body_table = get_table(body_matrix_fname, level)
 net = {}
 net['name'] = name
 net['level'] = level
+net['log'] = []
+net['online'] = []
 
 net = create_main_path(net, lobby_table, body_table, args.rooms, args.branches)
 

@@ -5,6 +5,8 @@ The dictionary contains the following:
 ```
 net['name'] # The name of the architecture, default is "NET" + the current date and time
 net['level'] # The adequate Interface Level for the architecture
+net['log'] # A chronological list of UIDs and their actions in the architecture
+net['online'] # A list UIDs currently online in the architecture
 net['max_depth'] # The maximum depth in the architecture, used later for placing Virus
 net['rooms'] # A list of dictionaries symbolising the rooms in the architecture
 ```
