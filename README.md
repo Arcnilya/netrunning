@@ -36,12 +36,13 @@ Saved NET Architecture as: NET-20211019-142110.json
 2. ~~Save NET Architecture to JSON~~
 3. ~~Add max\_depth to the NET Architecture~~
 4. ~~Merge roll-tables to one single file~~
-5. Add a log to the NET Architecture with UIDs
-6. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
-7. Add owner to Control Nodes (UIDs)
-8. Add content to Files (flavor text)
-9. Add Virus instructions to the NET Architecture
-10. Add "logged-in Netrunners" (UIDs) and their HP
+5. Add Architecture Name and Interface Level to argparse
+6. Add a log to the NET Architecture with UIDs
+7. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
+8. Add owner to Control Nodes (UIDs)
+9. Add content to Files (flavor text)
+10. Add Virus instructions to the NET Architecture
+11. Add "logged-in Netrunners" (UIDs) and their HP
 
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).
