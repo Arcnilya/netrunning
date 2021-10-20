@@ -6,6 +6,8 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
+parser.add_argument("-n", "--name", type=str, default="", help="name of the net architecture")
+parser.add_argument("-l", "--level", type=int, default=2, help="netrunner interface level")
 parser.add_argument("-r", "--rooms", type=int, default=None, help="number of rooms")
 parser.add_argument("-b", "--branches", type=int, default=None, help="number of branches")
 parser.add_argument("-t", "--test", action="store_true", help="skips saving as json")
@@ -113,10 +115,11 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
     return net
 
 
-name = input("Architecture Name (optional): ")
-name = "NET-"+time.strftime("%Y%m%d-%H%M%S") if name == "" else name
-level = input("Interface Level [2]: ")
-level = 2 if level == "" else int(level)
+#name = input("Architecture Name (optional): ")
+name = "NET-"+time.strftime("%Y%m%d-%H%M%S") if args.name == "" else args.name
+#level = input("Interface Level [2]: ")
+# https://gist.github.com/baybatu/269296fe1d530f0defff7b6454222bc0
+level = max(min(args.level, 8), 0) # Default 2
 lobby_table = get_table(lobby_table_fname)
 random.shuffle(lobby_table)
 body_table = get_table(body_matrix_fname, level)
