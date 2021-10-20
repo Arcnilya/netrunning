@@ -37,7 +37,7 @@ Saved NET Architecture as: NET-20211019-142110.json
 3. ~~Add max\_depth to the NET Architecture~~
 4. ~~Merge roll-tables to one single file~~
 5. ~~Add Architecture Name and Interface Level to argparse~~
-6. Add a log to the NET Architecture with UIDs
+6. ~~Add a log to the NET Architecture with UIDs~~
 7. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
 8. Add owner to Control Nodes (UIDs)
 9. Add content to Files (flavor text)

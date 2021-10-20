@@ -36,14 +36,20 @@ def roll_branch_num(): # Roll for the number of branches in the architecture
         branches += 1
     return branches
 
+def print_room(room):
+    DV = "" if room['DV'] == "" else " DV"+room['DV']
+    print(f"{room['content']}{DV} ({room['depth']})", end=' ')
+
 def print_architecture(result): # Nice output in the console
     print("="*37)
     print(f"NET Architecture: {result['name']}")
     print(f"Level: {result['level']} Max Depth: {result['max_depth']}")
-    for i,room in enumerate(result['rooms']):
-        print(room['content'], f"({room['depth']})", end=' ')
-        if room['branch']:
-            [print('-', branch['content'], f"({branch['depth']})", end=' ') for branch in room['branch']]
+    for i,main_room in enumerate(result['rooms']):
+        print_room(main_room)
+        if main_room['branch']:
+            for branch_room in main_room['branch']:
+                print("- ", end="")
+                print_room(branch_room)
         print("\n|") if i+1 < len(result['rooms']) else print("")
 
 def save_as_json(name, data): # Save in a neat json file
@@ -51,6 +57,14 @@ def save_as_json(name, data): # Save in a neat json file
         json.dump(data, fp, indent=4)
     print("="*37)
     print(f"Saved NET Architecture as: {name}.json")
+
+def create_room(content, owner, depth, branch):
+    owner = "H4CK3R"
+    DV = ""
+    if "DV" in content:
+        DV = content.split()[-1][2:]
+        content = " ".join(content.split()[:-1])
+    return {"content":content, "owner":owner, "DV":DV, "depth":depth, "branch":branch}
 
 def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
     branch = []
@@ -60,8 +74,8 @@ def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
         while roll in roll_hist:
             roll = roll_dice(3, 6)
         roll_hist.append(roll)
-        room = {"content":body[roll-3], "depth":curr_depth, "branch":[]} # Branches cannot have new branches
-        branch.append(room) 
+
+        branch.append(create_room(body[roll-3], "foo", curr_depth, [])) 
         num_floors -= 1
 
         # 50% chance of additional room in branch if budget allows
@@ -83,8 +97,7 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
     while floor < num_floors:
         if debug: print(f"current floor: {floor}")
         if floor < 2:   # Roll lobby table
-            room = {"content":lobby.pop(), "depth":curr_depth, "branch":[]}
-            rooms.append(room)
+            rooms.append(create_room(lobby.pop(), "foo", curr_depth, []))
         else:           # Roll body table
             roll = roll_dice(3, 6)
             while roll in roll_hist:
@@ -104,8 +117,7 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
                 max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
-            room = {"content":body_table[roll-3], "depth":curr_depth, "branch":branch}
-            rooms.append(room)
+            rooms.append(create_room(body_table[roll-3], "foo", curr_depth, branch))
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1
         floor += 1
