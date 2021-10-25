@@ -1,0 +1,12 @@
+Asp;Anti-Personnel;4;6;2;2;15;Destroys a single Program installed on the enemy Netrunner's Cyberdeck at random.;100eb
+Giant;Anti-Personnel;2;2;8;4;25;Does 3d6 damage direct to an enemy Netrunner's brain. The Netrunner is forcibly and unsafely Jacked Out of their current Netrun. They suffer the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they loave, not including the Giant;1000eb
+Hellhound;Anti-Personnel;6;6;6;2;20;Does 2d6 damage direct to the Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack;500eb
+Kraken;Anti-Personnel;6;2;8;4;30;Does 3d6 damage direct to an enemy Netrunner's brain. Until the end of the Netrunner's next Turn, the Netrunner cannot progress deeper into the Architecture or Jack Out safely (The Netrunner can still perform an unsafe Jack Out).;1000eb
+Liche;Anti-Personnel;8;2;6;2;25;Enemy Netrunner's INT, REF and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.;500eb
+Raven;Anti-Personnel;6;4;4;2;15;Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.;50eb
+Scorpion;Anti-Personnel;2;6;2;2;15;Enemy Netrunner's MOVE is lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.;100eb
+Skunk;Anti-Personnel;2;4;4;2;10;Until this Program is Derezzed, an enemy Netrunner hit by this Effect makes all Slide Checks at a -2. Each Skunk Black ICE can only affect a single Netrunner at a time, but the effects of multiple Skunks can stack;500eb
+Wisp;Anti-Personnel;4;4;4;2;15;Does 1d6 damage direct to the enemy Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).;50eb
+Dragon;Anti-Program;6;4;6;6;30;Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.;1000eb
+Killer;Anti-Program;4;8;6;2;20;Deals 4d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.;500eb
+Sabertooth;Anti-Program;8;6;6;2;25;Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.;1000eb

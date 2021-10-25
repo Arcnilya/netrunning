@@ -18,6 +18,28 @@ args = parser.parse_args()
 debug = True if args.debug else False
 body_matrix_fname = "cpr_net_body_matrix"
 lobby_table_fname = "cpr_net_lobby_table"
+black_ice_stats_fname = "cpr_black_ice_stats"
+
+def load_black_ice(fname):
+    all_black_ice = {}
+    with open(os.path.join("tables", fname), "r") as fp:
+        stats = fp.readlines()
+        for line in stats:
+            data = line.strip().split(";")
+            #print(data[0])
+            stats = {}
+            stats["class"] = data[1]
+            stats["PER"] = data[2]
+            stats["SPD"] = data[3]
+            stats["ATK"] = data[4]
+            stats["DEF"] = data[5]
+            stats["REZ"] = data[6]
+            stats["effect"] = data[7]
+            stats["cost"] = data[8]
+            all_black_ice[data[0]] = stats
+    #print(json.dumps(all_black_ice, indent=4))
+    return all_black_ice
+
 
 def get_table(fname, lvl=0):
     difficulty = int(lvl/2)-1 # Converting from Interface level to Difficulty
@@ -126,22 +148,25 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
     return net
 
 
-name = "NET-"+time.strftime("%Y%m%d-%H%M%S") if args.name == "" else args.name
-# https://gist.github.com/baybatu/269296fe1d530f0defff7b6454222bc0
-level = max(min(args.level, 8), 0) # Default 2
-lobby_table = get_table(lobby_table_fname)
-random.shuffle(lobby_table)
-body_table = get_table(body_matrix_fname, level)
+def process():
+    name = "NET-"+time.strftime("%Y%m%d-%H%M%S") if args.name == "" else args.name
+    # https://gist.github.com/baybatu/269296fe1d530f0defff7b6454222bc0
+    level = max(min(args.level, 8), 0) # Default 2
+    lobby_table = get_table(lobby_table_fname)
+    random.shuffle(lobby_table)
+    body_table = get_table(body_matrix_fname, level)
 
-net = {}
-net['name'] = name
-net['level'] = level
-net['log'] = []
-net['online'] = []
+    net = {}
+    net['name'] = name
+    net['level'] = level
+    net['log'] = []
+    net['online'] = []
 
-net = create_main_path(net, lobby_table, body_table, args.rooms, args.branches)
+    net = create_main_path(net, lobby_table, body_table, args.rooms, args.branches)
 
-print_architecture(net)
-if not args.test:
-    save_as_json(name, net)
+    print_architecture(net)
+    if not args.test:
+        save_as_json(name, net)
 
+process()
+#load_black_ice(black_ice_stats_fname)
