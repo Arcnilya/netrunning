@@ -27,7 +27,6 @@ def load_black_ice(fname):
         stats = fp.readlines()
         for line in stats:
             data = line.strip().split(";")
-            #print(data[0])
             stats = {}
             stats["class"] = data[1]
             stats["PER"] = data[2]
@@ -38,8 +37,6 @@ def load_black_ice(fname):
             stats["effect"] = data[7]
             stats["cost"] = data[8]
             black_ice_stats[data[0]] = stats
-    #print(json.dumps(black_ice_stats, indent=4))
-
 
 def get_table(fname, lvl=0):
     difficulty = int(lvl/2)-1 # Converting from Interface level to Difficulty
@@ -90,7 +87,7 @@ def create_content(content):
     content = content.split()
     if set(["Password","Control","File"]) & set(content):
         tmp['name'] = " ".join(content[:-1])
-        tmp['DV'] = content[-1][2:]
+        tmp['DV'] = content[-1].replace("DV", "")
         tmp['stats'] = None
         tmp['owner'] = net_owner
         tmp['details'] = "foo" if tmp['name'] == "File" else None
