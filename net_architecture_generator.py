@@ -38,8 +38,9 @@ def load_black_ice(fname):
             stats["cost"] = data[8]
             black_ice_stats[data[0]] = stats
 
-def get_table(fname, lvl=0):
-    difficulty = int(lvl/2)-1 # Converting from Interface level to Difficulty
+def get_table(fname, lvl=2):
+    difficulty = max(int(lvl/2), 1)-1 # Converting from Interface level to Difficulty
+    print(f"file: {fname}, difficulty: {difficulty}")
     with open(os.path.join("tables", fname), "r") as fp:
         return fp.readlines()[difficulty].strip().split(', ')
 
