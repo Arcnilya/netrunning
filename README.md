@@ -8,7 +8,7 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 
 ### Usage (WIP)
 ```
-python3 net_architecture_generator.py -r 10 -b 2 -l 2
+python3 net_architecture_generator.py --rooms 10 --branches 2 --level 2
 =====================================
 NET Architecture: NET-20211026-102210
 Level: 2 Max Depth: 7
