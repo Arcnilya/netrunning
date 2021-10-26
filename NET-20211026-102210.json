@@ -1,0 +1,202 @@
+{
+    "name": "NET-20211026-102210",
+    "level": 2,
+    "log": [],
+    "online": [],
+    "max_depth": 7,
+    "rooms": [
+        {
+            "content": [
+                {
+                    "name": "Skunk",
+                    "DV": null,
+                    "stats": {
+                        "class": "Anti-Personnel",
+                        "PER": "2",
+                        "SPD": "4",
+                        "ATK": "4",
+                        "DEF": "2",
+                        "REZ": "10",
+                        "effect": "Until this Program is Derezzed, an enemy Netrunner hit by this Effect makes all Slide Checks at a -2. Each Skunk Black ICE can only affect a single Netrunner at a time, but the effects of multiple Skunks can stack",
+                        "cost": "500eb"
+                    },
+                    "owner": "H4CK3R",
+                    "details": null
+                }
+            ],
+            "depth": 0,
+            "branch": []
+        },
+        {
+            "content": [
+                {
+                    "name": "Password",
+                    "DV": "6",
+                    "stats": null,
+                    "owner": "H4CK3R",
+                    "details": null
+                }
+            ],
+            "depth": 1,
+            "branch": []
+        },
+        {
+            "content": [
+                {
+                    "name": "File",
+                    "DV": "6",
+                    "stats": null,
+                    "owner": "H4CK3R",
+                    "details": "foo"
+                }
+            ],
+            "depth": 2,
+            "branch": []
+        },
+        {
+            "content": [
+                {
+                    "name": "Wisp",
+                    "DV": null,
+                    "stats": {
+                        "class": "Anti-Personnel",
+                        "PER": "4",
+                        "SPD": "4",
+                        "ATK": "4",
+                        "DEF": "2",
+                        "REZ": "15",
+                        "effect": "Does 1d6 damage direct to the enemy Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).",
+                        "cost": "50eb"
+                    },
+                    "owner": "H4CK3R",
+                    "details": null
+                }
+            ],
+            "depth": 3,
+            "branch": [
+                {
+                    "content": [
+                        {
+                            "name": "Raven",
+                            "DV": null,
+                            "stats": {
+                                "class": "Anti-Personnel",
+                                "PER": "6",
+                                "SPD": "4",
+                                "ATK": "4",
+                                "DEF": "2",
+                                "REZ": "15",
+                                "effect": "Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.",
+                                "cost": "50eb"
+                            },
+                            "owner": "H4CK3R",
+                            "details": null
+                        }
+                    ],
+                    "depth": 4,
+                    "branch": []
+                }
+            ]
+        },
+        {
+            "content": [
+                {
+                    "name": "Raven",
+                    "DV": null,
+                    "stats": {
+                        "class": "Anti-Personnel",
+                        "PER": "6",
+                        "SPD": "4",
+                        "ATK": "4",
+                        "DEF": "2",
+                        "REZ": "15",
+                        "effect": "Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.",
+                        "cost": "50eb"
+                    },
+                    "owner": "H4CK3R",
+                    "details": null
+                },
+                {
+                    "name": "Raven",
+                    "DV": null,
+                    "stats": {
+                        "class": "Anti-Personnel",
+                        "PER": "6",
+                        "SPD": "4",
+                        "ATK": "4",
+                        "DEF": "2",
+                        "REZ": "15",
+                        "effect": "Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.",
+                        "cost": "50eb"
+                    },
+                    "owner": "H4CK3R",
+                    "details": null
+                }
+            ],
+            "depth": 4,
+            "branch": []
+        },
+        {
+            "content": [
+                {
+                    "name": "Password",
+                    "DV": "6",
+                    "stats": null,
+                    "owner": "H4CK3R",
+                    "details": null
+                }
+            ],
+            "depth": 5,
+            "branch": [
+                {
+                    "content": [
+                        {
+                            "name": "Skunk",
+                            "DV": null,
+                            "stats": {
+                                "class": "Anti-Personnel",
+                                "PER": "2",
+                                "SPD": "4",
+                                "ATK": "4",
+                                "DEF": "2",
+                                "REZ": "10",
+                                "effect": "Until this Program is Derezzed, an enemy Netrunner hit by this Effect makes all Slide Checks at a -2. Each Skunk Black ICE can only affect a single Netrunner at a time, but the effects of multiple Skunks can stack",
+                                "cost": "500eb"
+                            },
+                            "owner": "H4CK3R",
+                            "details": null
+                        }
+                    ],
+                    "depth": 6,
+                    "branch": []
+                },
+                {
+                    "content": [
+                        {
+                            "name": "Control Node",
+                            "DV": "6",
+                            "stats": null,
+                            "owner": "H4CK3R",
+                            "details": null
+                        }
+                    ],
+                    "depth": 7,
+                    "branch": []
+                }
+            ]
+        },
+        {
+            "content": [
+                {
+                    "name": "Password",
+                    "DV": "6",
+                    "stats": null,
+                    "owner": "H4CK3R",
+                    "details": null
+                }
+            ],
+            "depth": 6,
+            "branch": []
+        }
+    ]
+}

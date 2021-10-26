@@ -19,9 +19,10 @@ debug = True if args.debug else False
 body_matrix_fname = "cpr_net_body_matrix"
 lobby_table_fname = "cpr_net_lobby_table"
 black_ice_stats_fname = "cpr_black_ice_stats"
+black_ice_stats = {}
+net_owner = "H4CK3R"
 
 def load_black_ice(fname):
-    all_black_ice = {}
     with open(os.path.join("tables", fname), "r") as fp:
         stats = fp.readlines()
         for line in stats:
@@ -36,9 +37,8 @@ def load_black_ice(fname):
             stats["REZ"] = data[6]
             stats["effect"] = data[7]
             stats["cost"] = data[8]
-            all_black_ice[data[0]] = stats
-    #print(json.dumps(all_black_ice, indent=4))
-    return all_black_ice
+            black_ice_stats[data[0]] = stats
+    #print(json.dumps(black_ice_stats, indent=4))
 
 
 def get_table(fname, lvl=0):
@@ -59,8 +59,12 @@ def roll_branch_num(): # Roll for the number of branches in the architecture
     return branches
 
 def print_room(room):
-    DV = "" if room['DV'] == "" else " DV"+room['DV']
-    print(f"{room['content']}{DV} ({room['depth']})", end=' ')
+    for i, content in enumerate(room['content']):
+        DV = "" if not content['DV'] else f"DV{content['DV']} "
+        print(f"{content['name']} {DV}", end='')
+        if i < len(room['content'])-1:
+            print("+", end=' ')
+    print(f"({room['depth']})", end=' ')
 
 def print_architecture(result): # Nice output in the console
     print("="*37)
@@ -80,13 +84,30 @@ def save_as_json(name, data): # Save in a neat json file
     print("="*37)
     print(f"Saved NET Architecture as: {name}.json")
 
-def create_room(content, owner, depth, branch):
-    owner = "H4CK3R"
-    DV = ""
-    if "DV" in content:
-        DV = content.split()[-1][2:]
-        content = " ".join(content.split()[:-1])
-    return {"content":content, "owner":owner, "DV":DV, "depth":depth, "branch":branch}
+def create_content(content):
+    content_list = []
+    tmp = {}
+    content = content.split()
+    if set(["Password","Control","File"]) & set(content):
+        tmp['name'] = " ".join(content[:-1])
+        tmp['DV'] = content[-1][2:]
+        tmp['stats'] = None
+        tmp['owner'] = net_owner
+        tmp['details'] = "foo" if tmp['name'] == "File" else None
+        content_list.append(tmp)
+    else: # Black ICE
+        for ice_name in content:
+            tmp = {}
+            tmp['name'] = ice_name
+            tmp['DV'] = None
+            tmp['stats'] = black_ice_stats[ice_name]
+            tmp['owner'] = net_owner
+            tmp['details'] = None
+            content_list.append(tmp)
+    return content_list
+
+def create_room(content, depth, branch):
+    return {"content":create_content(content), "depth":depth, "branch":branch}
 
 def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
     branch = []
@@ -97,7 +118,7 @@ def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
             roll = roll_dice(3, 6)
         roll_hist.append(roll)
 
-        branch.append(create_room(body[roll-3], "foo", curr_depth, [])) 
+        branch.append(create_room(body[roll-3], curr_depth, [])) 
         num_floors -= 1
 
         # 50% chance of additional room in branch if budget allows
@@ -119,7 +140,7 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
     while floor < num_floors:
         if debug: print(f"current floor: {floor}")
         if floor < 2:   # Roll lobby table
-            rooms.append(create_room(lobby.pop(), "foo", curr_depth, []))
+            rooms.append(create_room(lobby.pop(), curr_depth, []))
         else:           # Roll body table
             roll = roll_dice(3, 6)
             while roll in roll_hist:
@@ -139,7 +160,7 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
                 max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
-            rooms.append(create_room(body_table[roll-3], "foo", curr_depth, branch))
+            rooms.append(create_room(body[roll-3], curr_depth, branch))
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1
         floor += 1
@@ -155,6 +176,7 @@ def process():
     lobby_table = get_table(lobby_table_fname)
     random.shuffle(lobby_table)
     body_table = get_table(body_matrix_fname, level)
+    load_black_ice(black_ice_stats_fname)
 
     net = {}
     net['name'] = name
@@ -169,4 +191,3 @@ def process():
         save_as_json(name, net)
 
 process()
-#load_black_ice(black_ice_stats_fname)

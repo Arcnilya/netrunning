@@ -8,27 +8,25 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 
 ### Usage (WIP)
 ```
-python3 net_architecture_generator.py
-Architecture Name (optional): 
-Interface Level [2]: 
+python3 net_architecture_generator.py -r 10 -b 2 -l 2
 =====================================
-NET Architecture: NET-20211019-142110
-Level: 2 Max Depth: 6
-Wisp (0) 
+NET Architecture: NET-20211026-102210
+Level: 2 Max Depth: 7
+Skunk (0) 
 |
-Skunk (1) 
+Password DV6 (1) 
 |
-Raven x2 (2) 
+File DV6 (2) 
 |
-Password DV6 (3) - Control Node DV6 (4) 
+Wisp (3) - Raven (4) 
 |
-Asp (4) 
+Raven + Raven (4) 
 |
-Killer + Skunk (5) 
+Password DV6 (5) - Skunk (6) - Control Node DV6 (7) 
 |
-File DV6 (6) 
+Password DV6 (6) 
 =====================================
-Saved NET Architecture as: NET-20211019-142110.json
+Saved NET Architecture as: NET-20211026-102210.json
 ```
 
 ### Todo
@@ -38,11 +36,12 @@ Saved NET Architecture as: NET-20211019-142110.json
 4. ~~Merge roll-tables to one single file~~
 5. ~~Add Architecture Name and Interface Level to argparse~~
 6. ~~Add a log to the NET Architecture with UIDs~~
-7. Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect)
-8. Add owner to Control Nodes (UIDs)
-9. Add content to Files (flavor text)
-10. Add Virus instructions to the NET Architecture
-11. Add "logged-in Netrunners" (UIDs) and their HP
+7. ~~Restructure content in rooms~~ [link](documentation.md)
+8. ~~Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect, cost)~~
+9. Create a default log
+10. Add text to Files, passwords to Passwords, nodes to Control Nodes
+11. Add Virus instructions to the NET Architecture
+12. Add "logged-in Netrunners" (UIDs) and their HP
 
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).
