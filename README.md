@@ -39,9 +39,12 @@ Saved NET Architecture as: NET-20211026-102210.json
 7. ~~Restructure content in rooms~~ [link](documentation.md)
 8. ~~Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect, cost)~~
 9. Create a default log
-10. Add text to Files, passwords to Passwords, nodes to Control Nodes
-11. Add Virus instructions to the NET Architecture
-12. Add "logged-in Netrunners" (UIDs) and their HP
+10. Create lists of passwords, file content and control nodes
+    - Have different passwords for different DVs (matching entropy)
+    - Get file content from CP2077 shards, linux kernel, CS poetry
+11. Add text to Files, passwords to Passwords, nodes to Control Nodes
+12. Add Virus instructions to the NET Architecture
+13. Add "logged-in Netrunners" (UIDs) and their HP
 
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).

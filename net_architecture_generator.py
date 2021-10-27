@@ -4,6 +4,7 @@ import os
 import json
 import time
 import argparse
+import cpr_module
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-n", "--name", type=str, default="", help="name of the net architecture")
@@ -20,7 +21,27 @@ body_matrix_fname = "cpr_net_body_matrix"
 lobby_table_fname = "cpr_net_lobby_table"
 black_ice_stats_fname = "cpr_black_ice_stats"
 black_ice_stats = {}
+file_content_fname = "cpr_file_content"
+file_content = []
+password_fname = "cpr_passwords"
+passwords = []
+control_nodes_fname = "cpr_control_nodes"
+control_nodes = []
 net_owner = "H4CK3R"
+
+def load_content(fname, content_type):
+    lines = []
+    with open(os.path.join("tables", fname), "r") as fp:
+        lines = [l.strip() for l in fp.readlines()]
+        random.shuffle(lines)
+        for line in lines:
+            if content_type == "File":
+                file_content.append(line)
+            elif content_type == "Password":
+                passwords.append(line)
+            elif content_type == "Control Node":
+                control_nodes.append(line)
+
 
 def load_black_ice(fname):
     with open(os.path.join("tables", fname), "r") as fp:
@@ -40,7 +61,7 @@ def load_black_ice(fname):
 
 def get_table(fname, lvl=2):
     difficulty = max(int(lvl/2), 1)-1 # Converting from Interface level to Difficulty
-    print(f"file: {fname}, difficulty: {difficulty}")
+    #print(f"file: {fname}, difficulty: {difficulty}")
     with open(os.path.join("tables", fname), "r") as fp:
         return fp.readlines()[difficulty].strip().split(', ')
 
@@ -55,26 +76,6 @@ def roll_branch_num(): # Roll for the number of branches in the architecture
     while random.randint(1, 10) >= 7:
         branches += 1
     return branches
-
-def print_room(room):
-    for i, content in enumerate(room['content']):
-        DV = "" if not content['DV'] else f"DV{content['DV']} "
-        print(f"{content['name']} {DV}", end='')
-        if i < len(room['content'])-1:
-            print("+", end=' ')
-    print(f"({room['depth']})", end=' ')
-
-def print_architecture(result): # Nice output in the console
-    print("="*37)
-    print(f"NET Architecture: {result['name']}")
-    print(f"Level: {result['level']} Max Depth: {result['max_depth']}")
-    for i,main_room in enumerate(result['rooms']):
-        print_room(main_room)
-        if main_room['branch']:
-            for branch_room in main_room['branch']:
-                print("- ", end="")
-                print_room(branch_room)
-        print("\n|") if i+1 < len(result['rooms']) else print("")
 
 def save_as_json(name, data): # Save in a neat json file
     with open(name+'.json', 'w') as fp:
@@ -91,7 +92,14 @@ def create_content(content):
         tmp['DV'] = content[-1].replace("DV", "")
         tmp['stats'] = None
         tmp['owner'] = net_owner
-        tmp['details'] = "foo" if tmp['name'] == "File" else None
+        if tmp['name'] == "File":
+            tmp['details'] = file_content.pop() 
+        elif tmp['name'] == "Password":
+            tmp['details'] = passwords.pop()
+        elif tmp['name'] == "Control Node":
+            tmp['details'] = control_nodes.pop()
+        else:
+            tmp['details'] = None
         content_list.append(tmp)
     else: # Black ICE
         for ice_name in content:
@@ -175,6 +183,9 @@ def process():
     random.shuffle(lobby_table)
     body_table = get_table(body_matrix_fname, level)
     load_black_ice(black_ice_stats_fname)
+    load_content(file_content_fname, "File")
+    load_content(password_fname, "Password")
+    load_content(control_nodes_fname, "Control Node")
 
     net = {}
     net['name'] = name
@@ -184,7 +195,8 @@ def process():
 
     net = create_main_path(net, lobby_table, body_table, args.rooms, args.branches)
 
-    print_architecture(net)
+    #print_architecture(net)
+    cpr_module.print_architecture(net)
     if not args.test:
         save_as_json(name, net)
 
