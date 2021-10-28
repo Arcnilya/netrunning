@@ -8,25 +8,23 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 
 ### Usage (WIP)
 ```
-python3 net_architecture_generator.py --rooms 10 --branches 2 --level 2
+python3 net_architecture_generator.py --rooms 8 --branches 1 --level 4
 =====================================
-NET Architecture: NET-20211026-102210
-Level: 2 Max Depth: 7
-Skunk (0) 
+NET Architecture: NET-20211028-141420
+Level: 4 Max Depth: 5
+File DV6 (0) 
 |
-Password DV6 (1) 
+Skunk (1) 
 |
-File DV6 (2) 
+Sabertooth (2) - Hellhound (3) - Scorpion (4) 
 |
-Wisp (3) - Raven (4) 
+File DV8 (3) 
 |
-Raven + Raven (4) 
+Password DV8 (4) 
 |
-Password DV6 (5) - Skunk (6) - Control Node DV6 (7) 
-|
-Password DV6 (6) 
+Control Node DV8 (5) 
 =====================================
-Saved NET Architecture as: NET-20211026-102210.json
+Saved NET Architecture as: NET-20211028-141420.json
 ```
 
 ### Todo
@@ -38,9 +36,9 @@ Saved NET Architecture as: NET-20211026-102210.json
 6. ~~Add a log to the NET Architecture with UIDs~~
 7. ~~Restructure content in rooms~~ [link](documentation.md)
 8. ~~Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect, cost)~~
-9. Create a default log
+9. ~~Create a default log~~
 10. Create lists of passwords, file content and control nodes
-    - Have different passwords for different DVs (matching entropy)
+    - ~~Have different passwords for different DVs (matching entropy)~~
     - Get file content from CP2077 shards, linux kernel, CS poetry
 11. Add text to Files, passwords to Passwords, nodes to Control Nodes
 12. Add Virus instructions to the NET Architecture

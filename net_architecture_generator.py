@@ -29,6 +29,9 @@ control_nodes_fname = "cpr_control_nodes"
 control_nodes = []
 net_owner = "H4CK3R"
 
+def init_log(net_name):
+    return [f"{net_owner};created: {net_name};0"]
+
 def load_content(fname, content_type):
     lines = []
     with open(os.path.join("tables", fname), "r") as fp:
@@ -95,7 +98,7 @@ def create_content(content):
         if tmp['name'] == "File":
             tmp['details'] = file_content.pop() 
         elif tmp['name'] == "Password":
-            tmp['details'] = passwords.pop()
+            tmp['details'] = cpr_module.password_gen(int(tmp['DV']))
         elif tmp['name'] == "Control Node":
             tmp['details'] = control_nodes.pop()
         else:
@@ -190,7 +193,7 @@ def process():
     net = {}
     net['name'] = name
     net['level'] = level
-    net['log'] = []
+    net['log'] = init_log(net['name'])
     net['online'] = []
 
     net = create_main_path(net, lobby_table, body_table, args.rooms, args.branches)
@@ -201,3 +204,4 @@ def process():
         save_as_json(name, net)
 
 process()
+#cpr_module.password_gen(8)
