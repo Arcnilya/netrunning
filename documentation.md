@@ -7,6 +7,7 @@ net['name']         # The name of the architecture, default is "NET" + the curre
 net['level']        # The adequate Interface Level for the architecture
 net['log']          # A chronological list of UIDs and their actions in the architecture (see below)
 net['online']       # A list UIDs currently online in the architecture
+net['virus']        # Description of any Virus planted in the architecture
 net['max_depth']    # The maximum depth in the architecture, used later for placing Virus
 net['rooms']        # A list of dictionaries representing the rooms in the architecture (see below)
 ```

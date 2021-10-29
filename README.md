@@ -40,9 +40,8 @@ Saved NET Architecture as: NET-20211028-141420.json
 10. Create lists of passwords, file content and control nodes
     - ~~Have different passwords for different DVs (matching entropy)~~
     - Get file content from CP2077 shards, linux kernel, CS poetry
-11. Add text to Files, passwords to Passwords, nodes to Control Nodes
-12. Add Virus instructions to the NET Architecture
-13. Add "logged-in Netrunners" (UIDs) and their HP
+11. Add Virus instructions to the NET Architecture
+12. Add "logged-in Netrunners" (UIDs) and their HP
 
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).

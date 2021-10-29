@@ -23,8 +23,6 @@ black_ice_stats_fname = "cpr_black_ice_stats"
 black_ice_stats = {}
 file_content_fname = "cpr_file_content"
 file_content = []
-password_fname = "cpr_passwords"
-passwords = []
 control_nodes_fname = "cpr_control_nodes"
 control_nodes = []
 net_owner = "H4CK3R"
@@ -40,8 +38,6 @@ def load_content(fname, content_type):
         for line in lines:
             if content_type == "File":
                 file_content.append(line)
-            elif content_type == "Password":
-                passwords.append(line)
             elif content_type == "Control Node":
                 control_nodes.append(line)
 
@@ -86,10 +82,10 @@ def save_as_json(name, data): # Save in a neat json file
     print("="*37)
     print(f"Saved NET Architecture as: {name}.json")
 
-def create_content(content):
+def create_content(_content):
     content_list = []
     tmp = {}
-    content = content.split()
+    content = _content.split()
     if set(["Password","Control","File"]) & set(content):
         tmp['name'] = " ".join(content[:-1])
         tmp['DV'] = content[-1].replace("DV", "")
@@ -118,7 +114,7 @@ def create_content(content):
 def create_room(content, depth, branch):
     return {"content":create_content(content), "depth":depth, "branch":branch}
 
-def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
+def create_branch_path(body, num_rooms, num_branches, roll_hist, curr_depth):
     branch = []
     while True:
         curr_depth += 1
@@ -128,25 +124,26 @@ def create_branch_path(body, num_floors, num_branches, roll_hist, curr_depth):
         roll_hist.append(roll)
 
         branch.append(create_room(body[roll-3], curr_depth, [])) 
-        num_floors -= 1
+        num_rooms -= 1
 
         # 50% chance of additional room in branch if budget allows
         room_roll = round(random.random(), 2)
-        if debug: print(f"stop if {room_roll} < 0.5 or {num_floors} <= {num_branches} * 2")
-        if room_roll < 0.5 or num_floors <= (num_branches * 2):
+        if debug: print(f"stop if {room_roll} < 0.5 or {num_rooms} <= {num_branches} * 2")
+        if room_roll < 0.5 or num_rooms <= (num_branches * 2):
             break
     return branch, roll_hist
 
 def create_main_path(net, lobby, body, num_f=None, num_b=None):
     roll_hist = []
     rooms = []
-    num_floors = roll_dice(3, 6) if num_f == None else num_f
+    num_rooms = roll_dice(3, 6) if num_f == None else num_f
     num_branches = roll_branch_num() if num_b == None else num_b
-    if debug: print(f"floors {num_floors}, branches {num_branches}")
+    num_branches = min(num_branches, int((num_rooms-2)/2)) # Limiting num_branches based on num_rooms
+    if debug: print(f"floors {num_rooms}, branches {num_branches}")
     floor = 0
     curr_depth = 0
     max_depth = 0
-    while floor < num_floors:
+    while floor < num_rooms:
         if debug: print(f"current floor: {floor}")
         if floor < 2:   # Roll lobby table
             rooms.append(create_room(lobby.pop(), curr_depth, []))
@@ -159,12 +156,12 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
             # Try to spawn branch if available
             branch = []
             branch_roll = random.random()
-            if debug: print(f"branch_roll: {branch_roll} floor: {floor} num_floors: {num_floors} num_branches: {num_branches}")
-            if debug: print(f"check branch spawn: {branch_roll} <= {floor/(num_floors-(num_branches * 2))}")
-            if num_branches > 0 and branch_roll <= floor/(num_floors-(num_branches * 2)):
+            if debug: print(f"branch_roll: {branch_roll} floor: {floor} num_rooms: {num_rooms} num_branches: {num_branches}")
+            if debug: print(f"check branch spawn: {branch_roll} <= {floor/(num_rooms-(num_branches * 2))}")
+            if num_branches > 0 and branch_roll <= floor/(num_rooms-(num_branches * 2)):
                 if debug: print("Creating branch...")
                 num_branches -= 1
-                branch, new_roll_hist = create_branch_path(body, num_floors-floor-1, num_branches, roll_hist, curr_depth)
+                branch, new_roll_hist = create_branch_path(body, num_rooms-floor-1, num_branches, roll_hist, curr_depth)
                 if debug: print(branch)
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
@@ -187,7 +184,6 @@ def process():
     body_table = get_table(body_matrix_fname, level)
     load_black_ice(black_ice_stats_fname)
     load_content(file_content_fname, "File")
-    load_content(password_fname, "Password")
     load_content(control_nodes_fname, "Control Node")
 
     net = {}
@@ -195,13 +191,12 @@ def process():
     net['level'] = level
     net['log'] = init_log(net['name'])
     net['online'] = []
+    net['virus'] = None
 
     net = create_main_path(net, lobby_table, body_table, args.rooms, args.branches)
 
-    #print_architecture(net)
     cpr_module.print_architecture(net)
     if not args.test:
         save_as_json(name, net)
 
 process()
-#cpr_module.password_gen(8)
