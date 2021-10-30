@@ -21,29 +21,35 @@ body_matrix_fname = "cpr_net_body_matrix"
 lobby_table_fname = "cpr_net_lobby_table"
 black_ice_stats_fname = "cpr_black_ice_stats"
 black_ice_stats = {}
-file_content_fname = "cpr_file_content"
-file_content = []
 control_nodes_fname = "cpr_control_nodes"
 control_nodes = []
+shard_rolls = []
 net_owner = "H4CK3R"
 
-def init_log(net_name):
-    return [f"{net_owner};created: {net_name};0"]
 
-def load_content(fname, content_type):
+def load_control_nodes():
     lines = []
-    with open(os.path.join("tables", fname), "r") as fp:
+    with open(os.path.join("tables", control_nodes_fname), "r") as fp:
         lines = [l.strip() for l in fp.readlines()]
         random.shuffle(lines)
         for line in lines:
-            if content_type == "File":
-                file_content.append(line)
-            elif content_type == "Control Node":
-                control_nodes.append(line)
+            control_nodes.append(line)
 
 
-def load_black_ice(fname):
-    with open(os.path.join("tables", fname), "r") as fp:
+def fetch_random_shard():
+    shards = os.listdir(path=r"shards")
+    shard_list = [shard for shard in shards if shard.endswith(".txt")]
+    random.shuffle(shard_list)
+    random_shard = shard_list.pop()
+    while random_shard in shard_rolls:
+        random_shard = shard_list.pop()
+    shard_rolls.append(random_shard)
+    with open(os.path.join("shards", random_shard), "r") as fp:
+        return [random_shard, fp.read()]
+
+
+def load_black_ice():
+    with open(os.path.join("tables", black_ice_stats_fname), "r") as fp:
         stats = fp.readlines()
         for line in stats:
             data = line.strip().split(";")
@@ -60,7 +66,6 @@ def load_black_ice(fname):
 
 def get_table(fname, lvl=2):
     difficulty = max(int(lvl/2), 1)-1 # Converting from Interface level to Difficulty
-    #print(f"file: {fname}, difficulty: {difficulty}")
     with open(os.path.join("tables", fname), "r") as fp:
         return fp.readlines()[difficulty].strip().split(', ')
 
@@ -92,7 +97,7 @@ def create_content(_content):
         tmp['stats'] = None
         tmp['owner'] = net_owner
         if tmp['name'] == "File":
-            tmp['details'] = file_content.pop() 
+            tmp['details'] = fetch_random_shard()
         elif tmp['name'] == "Password":
             tmp['details'] = cpr_module.password_gen(int(tmp['DV']))
         elif tmp['name'] == "Control Node":
@@ -182,14 +187,13 @@ def process():
     lobby_table = get_table(lobby_table_fname)
     random.shuffle(lobby_table)
     body_table = get_table(body_matrix_fname, level)
-    load_black_ice(black_ice_stats_fname)
-    load_content(file_content_fname, "File")
-    load_content(control_nodes_fname, "Control Node")
+    load_black_ice()
+    load_control_nodes()
 
     net = {}
     net['name'] = name
     net['level'] = level
-    net['log'] = init_log(net['name'])
+    net['log'] = [f"{net_owner};created: {net['name']};0"]
     net['online'] = []
     net['virus'] = None
 

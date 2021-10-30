@@ -8,23 +8,33 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 
 ### Usage (WIP)
 ```
-python3 net_architecture_generator.py --rooms 8 --branches 1 --level 4
+python3 net_architecture_generator.py --rooms 15 --branches 2 --level 6
 =====================================
-NET Architecture: NET-20211028-141420
-Level: 4 Max Depth: 5
+NET Architecture: NET-20211031-005605
+Level: 6 Max Depth: 10
 File DV6 (0) 
 |
-Skunk (1) 
+Wisp (1) 
 |
-Sabertooth (2) - Hellhound (3) - Scorpion (4) 
+Password DV10 (2) 
 |
-File DV8 (3) 
+Killer (3) - Sabertooth (4) - Hellhound + Killer (5) - Control Node DV10 (6) 
 |
-Password DV8 (4) 
+Dragon (4) - Password DV10 (5) 
 |
-Control Node DV8 (5) 
+File DV10 (5) 
+|
+Liche (6) 
+|
+Hellhound + Scorpion (7) 
+|
+Dragon + Wisp (8) 
+|
+Hellhound (9) 
+|
+Asp + Raven (10) 
 =====================================
-Saved NET Architecture as: NET-20211028-141420.json
+Saved NET Architecture as: NET-20211031-005605.json
 ```
 
 ### Todo
@@ -37,11 +47,11 @@ Saved NET Architecture as: NET-20211028-141420.json
 7. ~~Restructure content in rooms~~ [link](documentation.md)
 8. ~~Add Black ICE stats (Name, Class, PER, SPD, ATK, DEF, REZ, Effect, cost)~~
 9. ~~Create a default log~~
-10. Create lists of passwords, file content and control nodes
+10. ~~Create lists of passwords, file content and control nodes~~
     - ~~Have different passwords for different DVs (matching entropy)~~
-    - Get file content from CP2077 shards, linux kernel, CS poetry
-11. Add Virus instructions to the NET Architecture
-12. Add "logged-in Netrunners" (UIDs) and their HP
+    - ~~Get file content from CP2077 shards, linux kernel, CS poetry~~
+11. ~~Add Virus instructions to the NET Architecture~~
+12. ~~Add "logged-in Netrunners" (UIDs) and their HP~~
 
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).

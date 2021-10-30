@@ -1,0 +1,3 @@
+Yesterday it worked
+Today it is not working
+Windows is like that.

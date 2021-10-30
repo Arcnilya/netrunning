@@ -19,6 +19,14 @@ Each entry in <code>net['log']</code> list is PLANNED TO BE structured as follow
 ...
 ```
 
+Each entry in <code>net['online']</code> list is PLANNED TO BE structured as follows:
+```
+<UID>;<HP>
+<UID>;<HP>
+<UID>;<HP>
+...
+```
+
 Each room in the <code>net['rooms']</code> list contains the following:
 ```
 room['content']     # What the room contains (see below)
