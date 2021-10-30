@@ -56,7 +56,17 @@ Saved NET Architecture as: NET-20211031-005605.json
 ## net\_architecture\_runner (Coming Soon)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).
 
-### Features
+### Usage (WIP)
+```
+python3 net_architecture_runner.py --net NET-20211031-005605.json
+Loaded the NET from the json file.
+```
+
+### Ideas and Todo
+- Should Netrunners be able to load their Cyberdecks?
+- How often should any changes be saved to disk?
+- Print out Virus instructions (if any) when entering
+- Need a way to track where the Netrunner is, add room IDs and track in Online list?
 - Two options for password: enter correct (3 tries) or bruteforce (roll against DV)
 - Log all actions in the Architecture and print the log when succeeding the Pathfinder DV. Use a handle (or a random number) to track actions and associate DVS.
 - Track the Program's REZ and any Netrunner's brain damage.   
