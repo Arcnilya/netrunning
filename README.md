@@ -1,12 +1,12 @@
 # netrunning
 Netrunning scripts for Cyberpunk Red
 
-## net\_architecture\_generator (Work in Progress)
+## net\_architecture\_generator (Draft 1.0)
 Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on the Interface level of a Netrunner.
 
 [NET Arcnitecture structure explained](documentation.md)
 
-### Usage (WIP)
+### Usage (Output subject to change)
 ```
 python3 net_architecture_generator.py --rooms 15 --branches 2 --level 6
 =====================================
@@ -53,7 +53,7 @@ Saved NET Architecture as: NET-20211031-005605.json
 11. ~~Add Virus instructions to the NET Architecture~~
 12. ~~Add "logged-in Netrunners" (UIDs) and their HP~~
 
-## net\_architecture\_runner (Coming Soon)
+## net\_architecture\_runner (Work In Progress)
 Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Architectures (from e.g., the net\_architecture\_generator).
 
 ### Usage (WIP)
@@ -69,4 +69,7 @@ Loaded the NET from the json file.
 - Need a way to track where the Netrunner is, add room IDs and track in Online list?
 - Two options for password: enter correct (3 tries) or bruteforce (roll against DV)
 - Log all actions in the Architecture and print the log when succeeding the Pathfinder DV. Use a handle (or a random number) to track actions and associate DVS.
-- Track the Program's REZ and any Netrunner's brain damage.   
+- Track the Program's REZ and any Netrunner's brain damage.
+
+## net\_architecture\_forger (Coming Soon)
+Similar to generator, but less automation and more manual control.
