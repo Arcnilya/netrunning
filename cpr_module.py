@@ -56,3 +56,10 @@ def password_gen(DV):
 
     #print(f"Your DV{DV} password is:", generated_string)
     return generated_string
+
+def get_random_UID():
+    string_format = ascii_letters + digits
+    generated_string = "".join(choice(string_format) for x in range(6))
+    generated_string = generated_string.upper()
+    return generated_string
+

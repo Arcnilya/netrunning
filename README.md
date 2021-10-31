@@ -62,7 +62,13 @@ python3 net_architecture_runner.py --net NET-20211031-005605.json
 Loaded the NET from the json file.
 ```
 
-### Ideas and Todo
+### Todo
+1. Change net['online'] and net['log'] to nested lists
+2. Add Pathfinder
+3. Add global variable for current room
+4. Print Virus on login
+
+### Ideas / Brainstorm
 - Should Netrunners be able to load their Cyberdecks?
 - How often should any changes be saved to disk?
 - Print out Virus instructions (if any) when entering
