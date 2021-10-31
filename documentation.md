@@ -21,9 +21,9 @@ Each entry in <code>net['log']</code> list is PLANNED TO BE structured as follow
 
 Each entry in <code>net['online']</code> list is PLANNED TO BE structured as follows:
 ```
-<UID>;<HP>
-<UID>;<HP>
-<UID>;<HP>
+<UID>;<HP>;<RID>
+<UID>;<HP>;<RID>
+<UID>;<HP>;<RID>
 ...
 ```
 
@@ -32,6 +32,7 @@ Each room in the <code>net['rooms']</code> list contains the following:
 room['content']     # What the room contains (see below)
 room['depth']       # How deep the room is, used later for placing Virus
 room['branch']      # A list of dictionaries symbolising the rooms in a branch
+room['RID']         # Room ID
 ```
 Note: The rooms in a <code>room['branch']</code> list do not have any further branches
 

@@ -116,10 +116,10 @@ def create_content(_content):
             content_list.append(tmp)
     return content_list
 
-def create_room(content, depth, branch):
-    return {"content":create_content(content), "depth":depth, "branch":branch}
+def create_room(content, depth, branch, RID):
+    return {"content":create_content(content), "depth":depth, "branch":branch, "RID":RID}
 
-def create_branch_path(body, num_rooms, num_branches, roll_hist, curr_depth):
+def create_branch_path(body, num_rooms, num_branches, roll_hist, curr_depth, rid):
     branch = []
     while True:
         curr_depth += 1
@@ -128,7 +128,8 @@ def create_branch_path(body, num_rooms, num_branches, roll_hist, curr_depth):
             roll = roll_dice(3, 6)
         roll_hist.append(roll)
 
-        branch.append(create_room(body[roll-3], curr_depth, [])) 
+        branch.append(create_room(body[roll-3], curr_depth, [], rid))
+        rid += 1
         num_rooms -= 1
 
         # 50% chance of additional room in branch if budget allows
@@ -146,12 +147,14 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
     num_branches = min(num_branches, int((num_rooms-2)/2)) # Limiting num_branches based on num_rooms
     if debug: print(f"floors {num_rooms}, branches {num_branches}")
     floor = 0
+    rid = 0
     curr_depth = 0
     max_depth = 0
     while floor < num_rooms:
         if debug: print(f"current floor: {floor}")
         if floor < 2:   # Roll lobby table
-            rooms.append(create_room(lobby.pop(), curr_depth, []))
+            rooms.append(create_room(lobby.pop(), curr_depth, [], rid))
+            rid += 1
         else:           # Roll body table
             roll = roll_dice(3, 6)
             while roll in roll_hist:
@@ -166,12 +169,14 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
             if num_branches > 0 and branch_roll <= floor/(num_rooms-(num_branches * 2)):
                 if debug: print("Creating branch...")
                 num_branches -= 1
-                branch, new_roll_hist = create_branch_path(body, num_rooms-floor-1, num_branches, roll_hist, curr_depth)
+                branch, new_roll_hist = create_branch_path(body, num_rooms-floor-1, num_branches, roll_hist, curr_depth, rid)
                 if debug: print(branch)
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
+                rid += len(branch) # Update RID
                 max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
-            rooms.append(create_room(body[roll-3], curr_depth, branch))
+            rooms.append(create_room(body[roll-3], curr_depth, branch, rid))
+            rid += 1
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1
         floor += 1
