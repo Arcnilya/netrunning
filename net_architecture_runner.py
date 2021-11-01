@@ -16,65 +16,81 @@ args = parser.parse_args()
 
 debug = True if args.debug else False
 clear = True if args.clear else False
-curr_UID = ""
-curr_cloak = 0
-curr_room = 0
 
-def clear_log(net):
-    first_entry = net['log'][0]
-    net['log'].clear()
-    net['log'].append(first_entry)
-    return net
+class runner():
+    def __init__(self, _net):
+        self.net = _net
+        self.curr_UID = ""
+        self.curr_cloak = 0
+        self.curr_room = 0
 
-def log_action(net, action):
-    net['log'].append([curr_UID, action, curr_cloak])
-    return net
+    def menu(self):
+        self.login()
+        #print(json.dumps(net, indent=4))
+        tmp = input("Press enter to exit:")
+        self.logout()
+        self.save_net()    
+
+    def clear_log(self):
+        self.net['log'] = self.net['log'][:1]
+
+    def log_action(self, action):
+        self.net['log'].append([self.curr_UID, action, self.curr_cloak])
+
+    def save_net(self):
+        if clear:
+            self.clear_log()
+        with open(self.net['name']+'.json', 'w') as fp:
+            json.dump(self.net, fp, indent=4)
+    
+    def is_UID_online(self, UID):
+        if any(UID == user[0] for user in self.net['online']):
+            return True
+        else:
+            return False
+
+    def login(self):
+        while True:
+            uname = input("Enter UID (Leave empty for random): ")
+            if uname == "": # Generate random UID
+                uname = cpr_module.get_random_UID()
+                while self.is_UID_online(uname):
+                    uname = cpr_module.get_random_UID()
+            if self.is_UID_online(uname):
+                print("UID already logged in, try again.")
+            else:
+                break
+        hp = 69
+        self.curr_UID = uname
+        self.net['online'].append([self.curr_UID, hp, self.curr_room])
+        self.log_action("Logged in")
+        print(f"You are now logged in as: {self.curr_UID}")
+
+    def logout(self):
+        for user in self.net['online']:
+            if self.curr_UID == user[0]:
+                self.net['online'].remove(user)
+                break
+        self.log_action("Logged out")
+        print(f"You have now logged out as: {self.curr_UID}")
 
 def load_net(fname):
     with open(fname, "r") as fp:
         return json.load(fp)
 
-def save_net(net):
-    net = clear_log(net) if clear else net
-    with open(net['name']+'.json', 'w') as fp:
-        json.dump(net, fp, indent=4)
-
-def login(net):
-    while True:
-        uname = input("Enter UID (Leave empty for random): ")
-        uname = uname if not uname == "" else cpr_module.get_random_UID()
-        if any(uname == user[0] for user in net['online']):
-            print("UID already logged in, try again.")
-        else:
-            break
-    hp = 69
-    global curr_UID
-    curr_UID = uname
-    net['online'].append([curr_UID, hp, curr_room])
-    net = log_action(net, "Logged in")
-    print(f"You are now logged in as: {curr_UID}")
-    return net
-
-def logout(net):
-    for user in net['online']:
-        if curr_UID == user[0]:
-            net['online'].remove(user)
-            break
-    net = log_action(net, "Logged out")
-    print(f"You have now logged out as: {curr_UID}")
-    return net
-
-def process():
+def main():
     if args.net.endswith(".json"):
         net = load_net(args.net)    
         print("Loaded the NET from the json file.")
     else:
         print("-n/--net must be a json file.")
         exit(0)
-    net = login(net)
-    #print(json.dumps(net, indent=4))
-    tmp = input("Press enter to exit:")
-    net = logout(net)
-    save_net(net)    
 
-process()
+    r = runner(net)
+    r.menu()
+
+
+
+
+if __name__ == '__main__':
+    main()

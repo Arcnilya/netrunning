@@ -8,21 +8,35 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 
 ### Usage (Output subject to change)
 ```
-python3 net_architecture_generator.py --rooms 5 --branches 0 --level 2
+python3 net_architecture_generator.py --rooms 12 --branches 0 --level 2
 =====================================
-NET Architecture: NET-20211101-120226
-Level: 2 Max Depth: 4
+NET Architecture: NET-20211101-131201
+Level: 2 Max Depth: 11
 Password DV6 (0) 
 |
-Killer (1) 
+Skunk (1) 
 |
-Wisp (2) 
+Killer + Skunk (2) 
 |
-File DV6 (3) 
+Password DV6 (3) 
 |
-Raven (4) 
+Skunk (4) 
+|
+Control Node DV6 (5) 
+|
+Password DV6 (6) 
+|
+File DV6 (7) 
+|
+Hellhound (8) 
+|
+Raven (9) 
+|
+Scorpion (10) 
+|
+Liche (11) 
 =====================================
-Saved NET Architecture as: NET-20211101-120226.json
+Saved NET Architecture as: NET-20211101-131201.json
 ```
 
 ### Todo
@@ -46,13 +60,17 @@ Simulates Netrunning in Cyberpunk Red with a Command Line Interface using NET Ar
 
 ### Usage (WIP)
 ```
-python3 net_architecture_runner.py --net NET-20211031-005605.json
+python3 net_architecture_runner.py --net NET-20211101-131201.json
 Loaded the NET from the json file.
+Enter UID (Leave empty for random): 
+You are now logged in as: KX7QJX
+Press enter to exit:
+You have now logged out as: KX7QJX
 ```
 
 ### Todo
 1. ~~Change net['online'] and net['log'] to nested lists~~
-2. Change to classes instead
+2. ~~Change to classes instead~~
 3. Print Virus on login
 4. Add Pathfinder
 
