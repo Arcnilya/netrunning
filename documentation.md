@@ -13,17 +13,19 @@ net['rooms']        # A list of dictionaries representing the rooms in the archi
 ```
 Each entry in <code>net['log']</code> list is PLANNED TO BE structured as follows:
 ```
-<UID>;<Action>;<CloakValue>
-<UID>;<Action>;<CloakValue>
-<UID>;<Action>;<CloakValue>
+[<string>, <string>, <number>]
+[UID, Action, CloakValue]
+[UID, Action, CloakValue]
+[UID, Action, CloakValue]
 ...
 ```
 
 Each entry in <code>net['online']</code> list is PLANNED TO BE structured as follows:
 ```
-<UID>;<HP>;<RID>
-<UID>;<HP>;<RID>
-<UID>;<HP>;<RID>
+[<string>, <number>, <number>]
+[UID, HP, RID]
+[UID, HP, RID]
+[UID, HP, RID]
 ...
 ```
 

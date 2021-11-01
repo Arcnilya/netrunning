@@ -8,33 +8,21 @@ Generates a balanced NET Architecture for Netrunning in Cyberpunk Red based on t
 
 ### Usage (Output subject to change)
 ```
-python3 net_architecture_generator.py --rooms 15 --branches 2 --level 6
+python3 net_architecture_generator.py --rooms 5 --branches 0 --level 2
 =====================================
-NET Architecture: NET-20211031-005605
-Level: 6 Max Depth: 10
-File DV6 (0) 
+NET Architecture: NET-20211101-120226
+Level: 2 Max Depth: 4
+Password DV6 (0) 
 |
-Wisp (1) 
+Killer (1) 
 |
-Password DV10 (2) 
+Wisp (2) 
 |
-Killer (3) - Sabertooth (4) - Hellhound + Killer (5) - Control Node DV10 (6) 
+File DV6 (3) 
 |
-Dragon (4) - Password DV10 (5) 
-|
-File DV10 (5) 
-|
-Liche (6) 
-|
-Hellhound + Scorpion (7) 
-|
-Dragon + Wisp (8) 
-|
-Hellhound (9) 
-|
-Asp + Raven (10) 
+Raven (4) 
 =====================================
-Saved NET Architecture as: NET-20211031-005605.json
+Saved NET Architecture as: NET-20211101-120226.json
 ```
 
 ### Todo
@@ -63,10 +51,10 @@ Loaded the NET from the json file.
 ```
 
 ### Todo
-1. Change net['online'] and net['log'] to nested lists
-2. Add Pathfinder
-3. Add global variable for current room
-4. Print Virus on login
+1. ~~Change net['online'] and net['log'] to nested lists~~
+2. Change to classes instead
+3. Print Virus on login
+4. Add Pathfinder
 
 ### Ideas / Brainstorm
 - Should Netrunners be able to load their Cyberdecks?

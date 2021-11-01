@@ -198,7 +198,7 @@ def process():
     net = {}
     net['name'] = name
     net['level'] = level
-    net['log'] = [f"{net_owner};created: {net['name']};0"]
+    net['log'] = [[net_owner, f"created: {net['name']}", 0]]
     net['online'] = []
     net['virus'] = None
 
