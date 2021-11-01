@@ -71,13 +71,21 @@ You have now logged out as: KX7QJX
 ### Todo
 1. ~~Change net['online'] and net['log'] to nested lists~~
 2. ~~Change to classes instead~~
-3. Print Virus on login
-4. Add Pathfinder
+3. ~~Print Virus on login~~
+4. Add Cloak
+5. Add Pathfinder
+6. Add ability to move in the NET (track with UID+RID)
+7. Add Backdoor (actually a bruteforce)
+8. Add Control
+9. Add Eye-Dee
+10. Add Virus (done by the GM separately?)
+11. Add Zap
+12. Add Net Combat
+13. Add Slide (flee from Non-Demon Black ICE)
 
 ### Ideas / Brainstorm
 - Should Netrunners be able to load their Cyberdecks?
 - How often should any changes be saved to disk?
-- Print out Virus instructions (if any) when entering
 - Need a way to track where the Netrunner is, add room IDs and track in Online list?
 - Two options for password: enter correct (3 tries) or bruteforce (roll against DV)
 - Log all actions in the Architecture and print the log when succeeding the Pathfinder DV. Use a handle (or a random number) to track actions and associate DVS.

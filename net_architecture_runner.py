@@ -26,10 +26,15 @@ class runner():
 
     def menu(self):
         self.login()
+        self.virus()
         #print(json.dumps(net, indent=4))
         tmp = input("Press enter to exit:")
         self.logout()
         self.save_net()    
+
+    def virus(self):
+        if self.net['virus']:
+            print(f"VIRUS! {self.net['virus']}")
 
     def clear_log(self):
         self.net['log'] = self.net['log'][:1]
