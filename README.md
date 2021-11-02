@@ -64,7 +64,18 @@ python3 net_architecture_runner.py --net NET-20211101-131201.json
 Loaded the NET from the json file.
 Enter UID (Leave empty for random): 
 You are now logged in as: KX7QJX
-Press enter to exit:
+==========
+0: exit
+1: cloak
+==========
+> 1
+Enter rolled CloakValue: 12
+Cloak successfully applied.
+==========
+0: exit
+1: cloak
+==========
+> 0
 You have now logged out as: KX7QJX
 ```
 
@@ -72,7 +83,7 @@ You have now logged out as: KX7QJX
 1. ~~Change net['online'] and net['log'] to nested lists~~
 2. ~~Change to classes instead~~
 3. ~~Print Virus on login~~
-4. Add Cloak
+4. ~~Add Cloak~~
 5. Add Pathfinder
 6. Add ability to move in the NET (track with UID+RID)
 7. Add Backdoor (actually a bruteforce)

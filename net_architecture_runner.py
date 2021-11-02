@@ -26,13 +26,35 @@ class runner():
 
     def menu(self):
         self.login()
-        self.virus()
-        #print(json.dumps(net, indent=4))
-        tmp = input("Press enter to exit:")
+        self.check_virus()
+        self.print_menu()
+        choice = int(input("> "))
+        while choice != 0:
+            if choice == 1:
+                self.cloak()
+            else:
+                break
+            self.print_menu()
+            choice = int(input("> "))
+
         self.logout()
         self.save_net()    
 
-    def virus(self):
+    def cloak(self):
+        cloak_value = int(input("Enter rolled CloakValue: "))
+        self.curr_cloak = cloak_value  # Update cloak 
+        for action in self.net['log']: # Update log
+            if action[0] == self.curr_UID:
+                action[2] = self.curr_cloak
+        print("Cloak successfully applied.")
+
+    def print_menu(self):
+        print("=" * 10)
+        print("0: exit")
+        print("1: cloak")
+        print("=" * 10)
+
+    def check_virus(self):
         if self.net['virus']:
             print(f"VIRUS! {self.net['virus']}")
 
