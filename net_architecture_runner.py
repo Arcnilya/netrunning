@@ -42,6 +42,25 @@ class runner():
         self.logout()
         self.save_net()    
 
+    def print_room(self, room):
+        for content in room['content']:
+            print(content['name'], end =" ")
+        if room['RID'] == self.curr_room:
+            print("(you are here)", end=" ")
+
+    def print_net(self, pf_val):
+        for r1 in self.net['rooms']:
+            if r1['RID'] >= pf_val: break
+            if r1['RID'] != 0:
+                print("\n |")
+            self.print_room(r1)
+            if r1['branch']:
+                for r2 in r1['branch']:
+                    if r2['RID'] >= pf_val: break
+                    print("-", end="")
+                    self.print_room(r2)
+        print("\n")
+
     def pathfinder(self):
         # Two parts: reveal log and reveal rooms
         pf_value = int(input("Enter rolled PathfinderValue: "))
@@ -55,6 +74,7 @@ class runner():
                 print(f"{action[0]}: {action[1]}")
         print("=" * 37, "\n")
         # TODO reveal rooms
+        self.print_net(pf_value)
 
     def cloak(self):
         cloak_value = int(input("Enter rolled CloakValue: "))
