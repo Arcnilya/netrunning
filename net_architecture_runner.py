@@ -32,6 +32,8 @@ class runner():
         while choice != 0:
             if choice == 1:
                 self.cloak()
+            elif choice == 2:
+                self.pathfinder()
             else:
                 break
             self.print_menu()
@@ -39,6 +41,20 @@ class runner():
 
         self.logout()
         self.save_net()    
+
+    def pathfinder(self):
+        # Two parts: reveal log and reveal rooms
+        pf_value = int(input("Enter rolled PathfinderValue: "))
+        print("Log:")
+        print("=" * 37)
+        for action in self.net['log']:
+            if action[0] == self.curr_UID:
+                # You ALWAYS see your own activity
+                print(f"{action[0]}: {action[1]} (you)") 
+            elif action[2] < pf_value:
+                print(f"{action[0]}: {action[1]}")
+        print("=" * 37, "\n")
+        # TODO reveal rooms
 
     def cloak(self):
         cloak_value = int(input("Enter rolled CloakValue: "))
@@ -52,6 +68,7 @@ class runner():
         print("=" * 10)
         print("0: exit")
         print("1: cloak")
+        print("2: pathfinder")
         print("=" * 10)
 
     def check_virus(self):

@@ -85,8 +85,10 @@ You have now logged out as: KX7QJX
 3. ~~Print Virus on login~~
 4. ~~Add Cloak~~
 5. Add Pathfinder
+    - Reveal Log
+    - Reveal Rooms
 6. Add ability to move in the NET (track with UID+RID)
-7. Add Backdoor (actually a bruteforce)
+7. Add Backdoor (actually a bruteforce against Passwords)
 8. Add Control
 9. Add Eye-Dee
 10. Add Virus (done by the GM separately?)
