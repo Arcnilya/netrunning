@@ -169,13 +169,13 @@ def create_main_path(net, lobby, body, num_f=None, num_b=None):
             if num_branches > 0 and branch_roll <= floor/(num_rooms-(num_branches * 2)):
                 if debug: print("Creating branch...")
                 num_branches -= 1
-                branch, new_roll_hist = create_branch_path(body, num_rooms-floor-1, num_branches, roll_hist, curr_depth, rid)
+                branch, new_roll_hist = create_branch_path(body, num_rooms-floor-1, num_branches, roll_hist, curr_depth, rid+1)
                 if debug: print(branch)
                 roll_hist = new_roll_hist
                 floor += len(branch) # Update budget
-                rid += len(branch) # Update RID
                 max_depth = curr_depth + len(branch) if curr_depth + len(branch) > max_depth else max_depth # Update max_depth
             rooms.append(create_room(body[roll-3], curr_depth, branch, rid))
+            rid += len(branch) # Update RID
             rid += 1
         max_depth = curr_depth if curr_depth > max_depth else max_depth
         curr_depth += 1

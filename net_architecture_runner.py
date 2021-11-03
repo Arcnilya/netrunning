@@ -48,17 +48,22 @@ class runner():
         if room['RID'] == self.curr_room:
             print("(you are here)", end=" ")
 
+    def is_password(self, room):
+        return any(content['name'] == "Password" for content in room['content'])
+
     def print_net(self, pf_val):
         for r1 in self.net['rooms']:
             if r1['RID'] >= pf_val: break
             if r1['RID'] != 0:
                 print("\n |")
             self.print_room(r1)
+            if self.is_password(r1): break
             if r1['branch']:
                 for r2 in r1['branch']:
                     if r2['RID'] >= pf_val: break
                     print("-", end="")
                     self.print_room(r2)
+                    if self.is_password(r2): break
         print("\n")
 
     def pathfinder(self):
